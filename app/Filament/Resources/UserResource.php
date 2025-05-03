@@ -24,22 +24,30 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('user')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->dehydrated(fn ($state) => filled($state)),
-                Forms\Components\Select::make('roles')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload()
+                Forms\Components\Section::make('User Information')
+                    ->schema([
+                    Forms\Components\TextInput::make('userId')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('username')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('email')
+                        ->email()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('password')
+                        ->password()
+                        ->dehydrated(fn ($state) => filled($state)),
+                    Forms\Components\TextInput::make('program')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('class')
+                        ->maxLength(255),
+                    Forms\Components\Select::make('roles')
+                        ->relationship('roles', 'name')
+                        ->multiple()
+                        ->preload()
+                    ])
             ]);
     }
 
@@ -47,9 +55,12 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('user'),
+                Tables\Columns\TextColumn::make('userId'),
+                Tables\Columns\TextColumn::make('username'),
                 Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\BadgeColumn::make('roles.name'),
+                Tables\Columns\TextColumn::make('program'),
+                Tables\Columns\TextColumn::make('class'),
             ])
             ->filters([
                 //
