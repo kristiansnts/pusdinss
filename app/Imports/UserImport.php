@@ -14,7 +14,6 @@ class UserImport implements ToCollection, WithHeadingRow
     */
     public function collection(Collection $collection)
     {
-
         $data = $collection->toArray();
 
         foreach ($data as $row) {
@@ -25,6 +24,8 @@ class UserImport implements ToCollection, WithHeadingRow
             $user->program = $row['program'];
             $user->class = $row['kelas'];
             $user->save();
+
+            $user->assignRole('siswa');
         }
     }
 }
