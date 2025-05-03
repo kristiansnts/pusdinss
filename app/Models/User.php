@@ -7,11 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasName
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
+
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    protected $primaryKey = 'userId';
 
     /**
      * The attributes that are mass assignable.
@@ -19,9 +26,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'userId',
+        'username',
         'email',
         'password',
+        'program',
+        'class',
     ];
 
     /**
@@ -42,8 +52,22 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->username}";
+    }
+
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        // You can customize this logic based on your requirements
+        // For example, only allow users with specific roles to access the panel
+        // return $this->hasRole('admin');
+
+        // Or allow all authenticated users to access
+        return true;
     }
 }
