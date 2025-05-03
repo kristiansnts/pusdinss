@@ -54,12 +54,18 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('userId'),
-                Tables\Columns\TextColumn::make('username'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\BadgeColumn::make('roles.name'),
-                Tables\Columns\TextColumn::make('program'),
-                Tables\Columns\TextColumn::make('class'),
+                Tables\Columns\TextColumn::make('userId')
+                    ->label('User'),
+                Tables\Columns\TextColumn::make('username')
+                    ->label('Nama'),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email'),
+                Tables\Columns\BadgeColumn::make('roles.name')
+                    ->label('Role'),
+                Tables\Columns\TextColumn::make('program')
+                    ->label('Program'),
+                Tables\Columns\TextColumn::make('class')
+                    ->label('Kelas'),
             ])
             ->filters([
                 //
