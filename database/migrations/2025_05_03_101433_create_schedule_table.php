@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('schedule', function (Blueprint $table) {
             $table->uuid('scheduleId')->primary();
-            $table->dateTime('date');
-            $table->string('class');
-            $table->string('module');
-            $table->string('time');
-            $table->string('tentor');
+            $table->dateTime('date')->nullable();
+            $table->string('class')->nullable();
+            $table->string('module')->nullable();
+            $table->string('time')->nullable();
+            $table->string('tentor')->nullable();
             $table->timestamps();
         });
     }
